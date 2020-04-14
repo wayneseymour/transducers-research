@@ -74,8 +74,8 @@ function makeFilterTransducer(predicate) {
 // Make a function that takes a reducer and returns a new
 // reducer that transforms every time before the original
 // reducer gets to see it.
-function makeMapTransducer(fn) {
-  return nextReducer => (acc, item) => nextReducer(acc, fn(item));
+function makeMapTransducer(mapper) {
+  return nextReducer => (acc, item) => nextReducer(acc, mapper(item));
 }
 
 const foundFilterTransducer = makeFilterTransducer(isFound);
