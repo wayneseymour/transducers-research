@@ -55,11 +55,12 @@ function isFound(item) {
 function getPopularity(item) {
   return item.popularity;
 }
+
 // We use an object to keep track of multiple values in a single return value.
 function addScores({totalPopularity, itemCount}, popularity) {
   return {
     totalPopularity: totalPopularity + popularity,
-    itemCount:       itemCount + 1,
+    itemCount: itemCount + 1,
   };
 }
 
@@ -82,7 +83,7 @@ const scoreMappingTransducer = makeMapTransducer(getPopularity);
 
 const allInOneReducer = foundFilterTransducer(scoreMappingTransducer(addScores));
 
-const initialInfo    = {totalPopularity: 0, itemCount: 0};
+const initialInfo = {totalPopularity: 0, itemCount: 0};
 const popularityInfo = victorianSlang.reduce(allInOneReducer, initialInfo);
 
 // Calculate the average and display.
