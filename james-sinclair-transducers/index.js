@@ -1,4 +1,4 @@
-const victorianSlang = [
+export const victorianSlang = [
   {
     term: 'doing the bear',
     found: true,
@@ -48,45 +48,35 @@ const victorianSlang = [
 
 // Helper functions
 // ---------------------------------------------------------------------------------
-function isFound(item) {
+export function isFound(item) {
   return item.found;
 };
 
-function getPopularity(item) {
-  return item.popularity;
-}
+export const getPopularity = item =>
+  item.popularity;
 
 // We use an object to keep track of multiple values in a single return value.
-function addScores({totalPopularity, itemCount}, popularity) {
-  return {
-    totalPopularity: totalPopularity + popularity,
-    itemCount: itemCount + 1,
-  };
-}
+export const addScores = ({totalPopularity, itemCount}, popularity) => ({
+  totalPopularity: totalPopularity + popularity,
+  itemCount: itemCount + 1,
+});
 
 // Make a function that takes a reducer and returns a
 // new reducer that filters out some items so that the
 // original reducer never sees them.
-function makeFilterTransducer(predicate) {
-  return nextReducer => (acc, item) => predicate(item) ? nextReducer(acc, item) : acc;
-}
+export const makeFilterTransducer = predicate => nextReducer => (acc, item) =>
+  predicate(item) ? nextReducer(acc, item) : acc;
 
 // Make a function that takes a reducer and returns a new
 // reducer that transforms every time before the original
 // reducer gets to see it.
-function makeMapTransducer(mapper) {
-  return nextReducer => (acc, item) => nextReducer(acc, mapper(item));
-}
+export const makeMapTransducer = mapper => nextReducer => (acc, item) =>
+  nextReducer(acc, mapper(item));
 
-const foundFilterTransducer = makeFilterTransducer(isFound);
-const scoreMappingTransducer = makeMapTransducer(getPopularity);
-
-const allInOneReducer = foundFilterTransducer(scoreMappingTransducer(addScores));
-
-const initialInfo = {totalPopularity: 0, itemCount: 0};
-const popularityInfo = victorianSlang.reduce(allInOneReducer, initialInfo);
-
-// Calculate the average and display.
-const {totalPopularity, itemCount} = popularityInfo;
-const averagePopularity = totalPopularity / itemCount;
-console.log("Average popularity:", averagePopularity);
+// export function makeMapTransducer(mapper) {
+//   return nextReducer => {
+//     return (acc, item) => {
+//       return nextReducer(acc, mapper(item));
+//     }
+//   }
+// }
