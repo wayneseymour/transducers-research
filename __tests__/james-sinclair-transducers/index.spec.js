@@ -11,9 +11,9 @@ describe(`james-sinclair-transducers`, () => {
   const allInOneReducer = foundFilterTransducer(scoreMappingTransducer(addScores));
 
   const initialInfo = {totalPopularity: 0, itemCount: 0};
-  const popularityInfo = victorianSlang().reduce(allInOneReducer, initialInfo);
 
   it(`should transduce down to 400.5`, () => {
+    const popularityInfo = victorianSlang().reduce(allInOneReducer, initialInfo);
     const {totalPopularity, itemCount} = popularityInfo;
     const averagePopularity = totalPopularity / itemCount;
     expect(400.5).toEqual(averagePopularity);
